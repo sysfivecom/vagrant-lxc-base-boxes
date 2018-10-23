@@ -1,3 +1,4 @@
+
 UBUNTU_BOXES= precise quantal raring saucy trusty utopic vivid wily xenial
 DEBIAN_BOXES= squeeze wheezy jessie stretch sid
 CENTOS_BOXES= 6 7
@@ -7,7 +8,7 @@ TODAY=$(shell date -u +"%Y-%m-%d")
 # Replace i686 with i386 and x86_64 with amd64
 ARCH=$(shell uname -m | sed -e "s/68/38/" | sed -e "s/x86_64/amd64/")
 
-default:
+default: all
 
 all: ubuntu debian fedora
 
@@ -15,6 +16,7 @@ ubuntu: $(UBUNTU_BOXES)
 debian: $(DEBIAN_BOXES)
 centos: $(CENTOS_BOXES)
 fedora: $(FEDORA_BOXES)
+centos7: 7
 
 # REFACTOR: Figure out how can we reduce duplicated code
 $(UBUNTU_BOXES): CONTAINER = "vagrant-base-${@}-$(ARCH)"
