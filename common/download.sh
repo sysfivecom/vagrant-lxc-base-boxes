@@ -45,7 +45,7 @@ elif [ ${DISTRIBUTION} = 'fedora' ] && [ ${RELEASE} -ge 21 ]; then
                    --release ${RELEASE} \
                    --arch ${ARCH}
 else
-  utils.lxc.create -t download -- \
+  utils.lxc.create -t download -f ${LXC_CONF} -- \
                    --dist ${DISTRIBUTION} \
                    --release ${RELEASE} \
                    --arch ${ARCH}

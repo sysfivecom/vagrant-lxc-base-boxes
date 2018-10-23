@@ -45,6 +45,14 @@ cd vagrant-lxc-base-boxes
 make precise
 ```
 
+By default the file /etc/lxc/default.conf as lxc configuration is used. If you
+would use some of the templates from the conf folder you have to use the
+environment variable LXC_CONF:
+
+```sh
+LXC_CONF=./conf/debian make stretch
+```
+
 By default no provisioning tools will be included but you can pick the ones
 you want by providing some environmental variables. For example:
 

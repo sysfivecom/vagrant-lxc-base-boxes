@@ -8,6 +8,7 @@ if [ "$(id -u)" != "0" ]; then
   exit 1
 fi
 
+export LXC_CONF=${LXC_CONF:-/etc/lxc/default.conf}
 export DISTRIBUTION='centos'
 export RELEASE=$1
 export ARCH=$2
