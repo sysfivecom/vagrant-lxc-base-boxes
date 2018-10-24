@@ -17,6 +17,7 @@ export ROOTFS="/var/lib/lxc/${CONTAINER}/rootfs"
 export WORKING_DIR="/tmp/${CONTAINER}"
 export NOW=$(date -u)
 export LOG=$(readlink -f .)/log/${CONTAINER}.log
+export LXC_CONF=${LXC_CONF:-/etc/lxc/default.conf}
 
 mkdir -p $(dirname $LOG)
 echo '############################################' > ${LOG}
