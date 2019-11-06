@@ -44,6 +44,13 @@ if [ ${DISTRIBUTION} = 'debian' ]; then
   fi
 fi
 
+# Unmask systemd-networkd.servic otherwise vagrant will use
+# ifup@ethx.service to restart the network interfaces and the dependency
+# sys-subsystem-net-devices-eth0.device ist not supported inside lxc
+# containers.
+utils.lxc.attach /bin/systemctl unmask systemd-networkd.service systemd-networkd.socket
+utils.lxc.attach /bin/systemctl enable systemd-networkd.service
+
 utils.lxc.attach /usr/sbin/locale-gen ${LANG}
 utils.lxc.attach update-locale LANG=${LANG}
 
