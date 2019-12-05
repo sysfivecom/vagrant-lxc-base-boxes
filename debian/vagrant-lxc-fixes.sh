@@ -30,7 +30,7 @@ if [ ${DISTRIBUTION} = 'debian' ]; then
 
   # Fixes for jessie, following the guide from
   # https://wiki.debian.org/LXC#Incompatibility_with_systemd
-  if [ "$RELEASE" = 'jessie' ] || [ "$RELEASE" = 'stretch' ]; then
+  if [ "$RELEASE" = 'jessie' ] || [ "$RELEASE" = 'stretch' ] || [ "$RELEASE" = 'buster' ]; then
 	  # Reconfigure the LXC
 	  utils.lxc.attach /bin/cp \
 		  /lib/systemd/system/getty@.service \
@@ -40,6 +40,8 @@ if [ ${DISTRIBUTION} = 'debian' ]; then
 		  "${ROOTFS}/etc/systemd/system/getty@.service"
 
 	  # Mask udev.service and systemd-udevd.service:
+    echo "Waiting for systemd...sleeping for 5 seconds."
+    sleep 5
 	  utils.lxc.attach /bin/systemctl mask udev.service systemd-udevd.service
   fi
 fi
