@@ -44,14 +44,21 @@ if [ ${DISTRIBUTION} = 'debian' ]; then
     sleep 5
 	  utils.lxc.attach /bin/systemctl mask udev.service systemd-udevd.service
   fi
-fi
 
-# Unmask systemd-networkd.servic otherwise vagrant will use
-# ifup@ethx.service to restart the network interfaces and the dependency
-# sys-subsystem-net-devices-eth0.device ist not supported inside lxc
-# containers.
-utils.lxc.attach /bin/systemctl unmask systemd-networkd.service systemd-networkd.socket
-utils.lxc.attach /bin/systemctl enable systemd-networkd.service
+  if [ "$RELEASE" = 'buster' ]; then
+    utils.lxc.attach /bin/systemctl disable systemd-resolved.service
+    utils.lxc.attach /bin/systemctl stop systemd-resolved.service
+  fi
+
+  if [ "$RELEASE" = 'stretch' ] || [ "$RELEASE" = 'buster' ]; then
+    # Unmask systemd-networkd.servic otherwise vagrant will use
+    # ifup@ethx.service to restart the network interfaces and the dependency
+    # sys-subsystem-net-devices-eth0.device ist not supported inside lxc
+    # containers.
+    utils.lxc.attach /bin/systemctl unmask systemd-networkd.service systemd-networkd.socket
+    utils.lxc.attach /bin/systemctl enable systemd-networkd.service
+  fi
+fi
 
 utils.lxc.attach /usr/sbin/locale-gen ${LANG}
 utils.lxc.attach update-locale LANG=${LANG}
